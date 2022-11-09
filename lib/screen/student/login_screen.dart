@@ -20,6 +20,35 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final AuthMethods _authHelper = AuthMethods();
   // DatabaseHelper _databaseHelper = DatabaseHelper();
+  void login() {
+    if (formKey.currentState!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
+      _authHelper
+          .loginUser(_emailController.text, _passwordController.text)
+          .then((value) {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return const StudentHomePage();
+        }));
+      }).catchError((e) {
+        setState(() {
+          isLoading = false;
+        });
+        SnackBar snackBar = SnackBar(content: Text(e.code));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      });
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+      SnackBar snackBar = const SnackBar(
+          content: Text('Something went wrong please try again'));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+  }
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -53,14 +82,37 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(
                           height: 25,
                         ),
-                        InputField(
-                            hintText: 'E-mail', controller: _emailController),
+                        TextField(
+                          obscureText: false,
+                          controller: _emailController,
+                          decoration: InputDecoration(
+                            fillColor: Colors.white70,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            hintStyle: TextStyle(
+                                fontSize: 15, color: Colors.grey[800]),
+                            prefixIcon: Icon(Icons.mail),
+                            hintText: 'E-mail',
+                          ),
+                        ),
                         const SizedBox(
                           height: 25,
                         ),
-                        InputField(
+                        TextField(
+                          obscureText: true,
+                          controller: _passwordController,
+                          decoration: InputDecoration(
+                            fillColor: Colors.white70,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            hintStyle: TextStyle(
+                                fontSize: 15, color: Colors.grey[800]),
+                            prefixIcon: Icon(Icons.password),
                             hintText: 'Password',
-                            controller: _passwordController),
+                          ),
+                        ),
                         const SizedBox(
                           height: 25,
                         ),
@@ -69,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   LinearButton(
                     title: 'Login',
-                    onTap: _login,
+                    onTap: login,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -78,6 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       const Text("Don't have an account?"),
                       TextButton(
                           onPressed: () {
+                            print(_emailController.text);
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
                                     builder: (context) =>
@@ -96,34 +149,5 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
-  }
-
-  void _login() async {
-    if (formKey.currentState!.validate()) {
-      setState(() {
-        isLoading = true;
-      });
-      _authHelper
-          .loginUser(_emailController.text, _passwordController.text)
-          .then((value) {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) {
-          return const StudentHomePage();
-        }));
-      }).catchError((e) {
-        setState(() {
-          isLoading = false;
-        });
-        SnackBar snackBar = SnackBar(content: Text(e.code));
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      });
-    } else {
-      setState(() {
-        isLoading = false;
-      });
-      SnackBar snackBar = const SnackBar(
-          content: Text('Something went wrong please try again'));
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }
   }
 }

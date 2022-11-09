@@ -1,13 +1,13 @@
 import 'dart:io';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:signed/helpers/widgets.dart';
 
+import '../../methods/aes.dart';
 import '../../methods/storage_methods.dart';
 
 class QRScan extends StatefulWidget {
@@ -18,10 +18,16 @@ class QRScan extends StatefulWidget {
 }
 
 class _QRScanState extends State<QRScan> {
+  String text = '';
   Barcode? result;
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  AESEncryption encryption = AESEncryption();
   final DatabaseHelper _databaseHelper = DatabaseHelper();
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   void reassemble() {
@@ -118,7 +124,7 @@ class _QRScanState extends State<QRScan> {
                   ElevatedButton(
                     onPressed: () {
                       String? data = result!.code;
-                      final key = encrypt.Key.fromUtf8('College');
+                      final key = encrypt.Key.fromLength(32);
                       final iv = encrypt.IV.fromLength(16);
                       final encrypter = encrypt.Encrypter(encrypt.AES(key));
                       final decryptedQR = encrypter
@@ -143,21 +149,23 @@ class _QRScanState extends State<QRScan> {
                           .then((QuerySnapshot value) => {
                                 value.docs.forEach((element) {
                                   _databaseHelper.markStudentAttendance(
-                                      sectionName, sessionName, element.id);
+                                    sectionName,
+                                    sessionName,
+                                    element.id,
+                                  );
                                   Navigator.of(context).pop();
                                   showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
                                         return AlertDialog(
                                           title: Text(
-                                            'Attendance Marked for $sessionName successfully',
+                                            'Attendance Marked for $sessionName with $text successfully',
                                             textAlign: TextAlign.center,
                                           ),
                                           content: SingleChildScrollView(
                                               child: ListBody(
                                             children: [
-                                              Image.asset(
-                                                  'assets/images/check.gif')
+                                              Image.asset('images/tic.png')
                                             ],
                                           )),
                                           actions: [
@@ -165,12 +173,17 @@ class _QRScanState extends State<QRScan> {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
                                               children: [
-                                                LinearButton(
-                                                  title: 'Okay',
-                                                  onTap: (() =>
+                                                ElevatedButton(
+                                                  onPressed: (() =>
                                                       Navigator.of(context)
                                                           .pop()),
-                                                )
+                                                  style: ButtonStyle(
+                                                      backgroundColor:
+                                                          MaterialStateProperty
+                                                              .all(Colors
+                                                                  .green)),
+                                                  child: const Text('Okay'),
+                                                ),
                                               ],
                                             )
                                           ],

@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:signed/responsive/responsive.dart';
-import 'package:signed/responsive/student/mobile_screen.dart';
-import 'package:signed/responsive/student/web_screen.dart';
 import 'package:signed/screen/auth/select.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -60,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen>
                   return SlideTransition(
                     position: offsetAnimation,
                     child: Image.asset(
-                      'images/oh.png',
+                      'images/logos.jpg',
                     ),
                   );
                 })

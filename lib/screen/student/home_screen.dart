@@ -4,7 +4,7 @@ import 'package:signed/main.dart';
 import 'package:signed/methods/auth_methods.dart';
 import 'package:signed/screen/student/qr_scan.dart';
 
-import '../../methods/storage_methods.dart';
+import 'device_info.dart';
 
 class StudentHomePage extends StatefulWidget {
   const StudentHomePage({Key? key}) : super(key: key);
@@ -44,7 +44,7 @@ class _StudentHomePageState extends State<StudentHomePage> {
         ),
         body: TabBarView(children: [
           Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
                 onPressed: (() => Navigator.of(context).push(
@@ -55,6 +55,17 @@ class _StudentHomePageState extends State<StudentHomePage> {
                   const Color(0xff38AD57),
                 )),
                 child: const Text('Scan QR Code'),
+              ),
+              ElevatedButton(
+                onPressed: (() => Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: ((context) => const Devices())),
+                    )),
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                  const Color(0xff38AD57),
+                )),
+                child: const Text('Device IMEI'),
               )
             ],
           ),

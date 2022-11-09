@@ -44,7 +44,7 @@ class _TeacherLoginState extends State<TeacherLogin> {
       });
     } else {
       setState(() {
-        _isLoading = false;
+        _isLoading;
       });
       SnackBar snackBar = const SnackBar(
           content: Text("Something went wrong please try again later!"));

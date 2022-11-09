@@ -12,37 +12,41 @@ class Select extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              LinearButton(
-                title: 'Student',
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset(
+              'images/logos.jpg',
+              height: screenHeight / 2,
+            ),
+            const SizedBox(height: 35),
+            LinearButton(
+              title: 'Student',
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const Responsive(
+                            mobileScreen: MobileScreen(),
+                            desktopScreen: WebScreen())));
+              },
+            ),
+            const SizedBox(height: 25),
+            LinearButton(
+                title: 'Teacher',
                 onTap: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const Responsive(
-                              mobileScreen: MobileScreen(),
-                              desktopScreen: WebScreen())));
-                },
-              ),
-              const SizedBox(height: 25),
-              LinearButton(
-                  title: 'Teacher',
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Responsive(
-                                mobileScreen: TeacherMobileScreen(),
-                                desktopScreen: TeacherWebScreen())));
-                  })
-            ],
-          ),
+                              mobileScreen: TeacherMobileScreen(),
+                              desktopScreen: TeacherWebScreen())));
+                })
+          ],
         ),
       ),
     );

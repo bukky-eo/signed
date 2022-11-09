@@ -11,15 +11,10 @@ class AuthMethods {
   }
 
   Future<String?> signUpUser(String email, String password) async {
-    try {
-      UserCredential result = await firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: password);
-      User? user = result.user;
-
-      return user?.uid;
-    } catch (e) {
-      print(e.toString());
-    }
+    UserCredential result = await firebaseAuth.createUserWithEmailAndPassword(
+        email: email, password: password);
+    User? user = result.user;
+    return user?.uid;
   }
 
   Future<User?> getCurrentUser() async {

@@ -5,7 +5,6 @@ import 'package:signed/screen/student/home_screen.dart';
 import '../../helpers/constants.dart';
 import '../../helpers/widgets.dart';
 import 'package:signed/screen/student/login_screen.dart';
-
 import '../../methods/storage_methods.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -63,7 +62,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         setState(() {
           isLoading = false;
         });
-        SnackBar snackBar = SnackBar(content: Text(e));
+        SnackBar snackBar = SnackBar(content: Text(e.message));
 
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       });
@@ -158,14 +157,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             hintText: 'E-mail',
                           ),
                         ),
-                        // InputField(
-                        //     hintText: 'E-mail', controller: _emailController),
                         const SizedBox(
                           height: 25,
                         ),
-                        // InputField(
-                        //     hintText: 'Password',
-                        //     controller: _passwordController),
                         TextField(
                           obscureText: true,
                           controller: _passwordController,
@@ -218,6 +212,4 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
-
-  void signUp(String email, String password, String userName) async {}
 }

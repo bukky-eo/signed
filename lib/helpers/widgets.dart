@@ -30,7 +30,7 @@ class LinearButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: 12, left: 25, right: 25, bottom: 12),
+      padding: const EdgeInsets.only(top: 12, left: 45, right: 45, bottom: 12),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
           gradient: const LinearGradient(

@@ -16,8 +16,9 @@ class DatabaseHelper {
         .get();
   }
 
-  uploadTeacherInfo(String username, Map<String, String> teacherInfo) async {
-    FirebaseFirestore.instance
+  Future<void> uploadTeacherInfo(
+      String username, Map<String, String> teacherInfo) async {
+    await FirebaseFirestore.instance
         .collection('Teachers')
         .doc(username)
         .set(teacherInfo);
@@ -164,7 +165,11 @@ class DatabaseHelper {
         .snapshots();
   }
 
-  markStudentAttendance(String sectionId, String sessionId, String rollNumber) {
+  markStudentAttendance(
+    String sectionId,
+    String sessionId,
+    String rollNumber,
+  ) {
     FirebaseFirestore.instance
         .collection('Attendance')
         .doc(sectionId)
