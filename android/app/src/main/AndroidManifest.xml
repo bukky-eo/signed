@@ -3,7 +3,7 @@
    <application
         android:label="signed"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/logos.png">
         <activity
             android:name=".MainActivity"
             android:exported="true"
