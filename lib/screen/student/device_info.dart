@@ -69,7 +69,7 @@ class _DevicesState extends State<Devices> {
       body: Padding(
         padding: const EdgeInsets.only(left: 15, right: 15),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          // mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(
