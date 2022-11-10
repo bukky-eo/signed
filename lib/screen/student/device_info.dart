@@ -6,8 +6,6 @@ import 'dart:io';
 import '../../main.dart';
 import '../../methods/auth_methods.dart';
 
-// import 'package:flutter/foundation.dart';
-
 class Devices extends StatefulWidget {
   const Devices({Key? key}) : super(key: key);
 
